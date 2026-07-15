@@ -1,0 +1,15 @@
+{
+  "users": {
+    "anubhav": {
+      "username": "anubhav",
+      "joinedRooms": [
+        "UCZ786"
+      ],
+      "blockedUsers": [],
+      "activeStatus": "offline",
+      "lastSeen": "2026-07-08T06:01:20.186Z"
+    }
+  },
+  "rooms": {},
+  "messages": {}
+}

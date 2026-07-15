@@ -1,0 +1,581 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+/* ============================================================
+   Design System — CSS Custom Properties
+   ============================================================ */
+:root {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Brand Colors */
+  --brand-primary: #7C3AED;
+  --brand-primary-light: #8B5CF6;
+  --brand-secondary: #EC4899;
+  --brand-gradient: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+
+  /* Dark mode tokens (default) */
+  --bg-base: #0B0F1A;
+  --bg-surface: #111827;
+  --bg-elevated: #1A2234;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --bg-card-hover: rgba(255, 255, 255, 0.06);
+  --bg-input: rgba(15, 23, 42, 0.6);
+  --bg-input-focus: rgba(15, 23, 42, 0.8);
+  --bg-sidebar: #0D1320;
+  --bg-header: rgba(11, 15, 26, 0.85);
+  --bg-bubble-me: rgba(124, 58, 237, 0.15);
+  --bg-bubble-them: rgba(255, 255, 255, 0.04);
+  --bg-modal: rgba(13, 19, 32, 0.97);
+  --bg-tooltip: #1E2A3A;
+
+  --border-color: rgba(255, 255, 255, 0.07);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --border-brand: rgba(124, 58, 237, 0.4);
+  --border-input: rgba(255, 255, 255, 0.08);
+  --border-input-focus: rgba(124, 58, 237, 0.5);
+
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --text-tertiary: #64748B;
+  --text-brand: #A78BFA;
+  --text-muted: #475569;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-brand: 0 0 20px rgba(124, 58, 237, 0.2);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   Light Mode Tokens
+   ============================================================ */
+.light {
+  --bg-base: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #F1F5F9;
+  --bg-card: rgba(255, 255, 255, 0.7);
+  --bg-card-hover: rgba(255, 255, 255, 0.9);
+  --bg-input: rgba(255, 255, 255, 0.8);
+  --bg-input-focus: rgba(255, 255, 255, 1);
+  --bg-sidebar: #FFFFFF;
+  --bg-header: rgba(255, 255, 255, 0.9);
+  --bg-bubble-me: rgba(124, 58, 237, 0.12);
+  --bg-bubble-them: rgba(0, 0, 0, 0.04);
+  --bg-modal: rgba(255, 255, 255, 0.98);
+  --bg-tooltip: #1E293B;
+
+  --border-color: rgba(0, 0, 0, 0.07);
+  --border-strong: rgba(0, 0, 0, 0.12);
+  --border-brand: rgba(124, 58, 237, 0.3);
+  --border-input: rgba(0, 0, 0, 0.1);
+  --border-input-focus: rgba(124, 58, 237, 0.5);
+
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-tertiary: #94A3B8;
+  --text-brand: #7C3AED;
+  --text-muted: #CBD5E1;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --shadow-brand: 0 0 20px rgba(124, 58, 237, 0.12);
+}
+
+/* ============================================================
+   Base Styles
+   ============================================================ */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-base);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: rgba(124, 58, 237, 0.3);
+    color: var(--text-primary);
+  }
+}
+
+/* ============================================================
+   Tailwind v4 Theme Tokens
+   ============================================================ */
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-brand-purple: #7C3AED;
+  --color-brand-pink: #EC4899;
+  --color-brand-dark: #0B0F1A;
+}
+
+/* ============================================================
+   Glass Morphism Components
+   ============================================================ */
+.glass-container {
+  background: linear-gradient(135deg, rgba(11, 15, 26, 0.9) 0%, rgba(7, 10, 18, 0.95) 100%);
+}
+
+.light .glass-container {
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.98) 100%);
+}
+
+.glass-panel {
+  background-color: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+}
+
+.glass-panel-heavy {
+  background-color: var(--bg-modal);
+  backdrop-filter: blur(32px);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-lg);
+}
+
+.glass-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+.glass-card:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-brand);
+  box-shadow: var(--shadow-brand);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   Input / Form Components
+   ============================================================ */
+.glass-input {
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-input);
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+  font-family: var(--font-sans);
+}
+
+.glass-input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.glass-input:focus {
+  background-color: var(--bg-input-focus);
+  border-color: var(--border-input-focus);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  outline: none;
+}
+
+/* ============================================================
+   Button Components
+   ============================================================ */
+.btn-primary {
+  background: var(--brand-gradient);
+  color: white;
+  border: none;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-brand);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  filter: none;
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.btn-ghost:hover {
+  background-color: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.icon-btn:hover {
+  color: var(--brand-primary-light);
+  border-color: var(--border-brand);
+  background-color: rgba(124, 58, 237, 0.08);
+}
+
+.icon-btn.active {
+  background-color: var(--brand-primary);
+  border-color: var(--brand-primary);
+  color: white;
+}
+
+/* ============================================================
+   Glow Button Shimmer Effect
+   ============================================================ */
+.glow-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+.glow-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.12) 40%,
+    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.12) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-20deg) translateX(-100%);
+  transition: none;
+  pointer-events: none;
+}
+
+.glow-btn:hover::after {
+  transform: skewX(-20deg) translateX(100%);
+  transition: transform 0.6s ease;
+}
+
+/* ============================================================
+   Custom Scrollbar
+   ============================================================ */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, 0.4);
+}
+
+.light .custom-scrollbar {
+  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+}
+
+.light .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.light .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 58, 237, 0.3);
+}
+
+/* ============================================================
+   Chat Bubble Styles (WhatsApp-inspired)
+   ============================================================ */
+.bubble-me {
+  background-color: var(--bg-bubble-me);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: var(--radius-xl) var(--radius-sm) var(--radius-xl) var(--radius-xl);
+}
+
+.bubble-them {
+  background-color: var(--bg-bubble-them);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm) var(--radius-xl) var(--radius-xl) var(--radius-xl);
+}
+
+/* ============================================================
+   Sidebar Drawer (Mobile)
+   ============================================================ */
+.sidebar-drawer {
+  transform: translateX(-100%);
+  transition: transform var(--transition-slow);
+}
+
+.sidebar-drawer.open {
+  transform: translateX(0);
+}
+
+/* ============================================================
+   Animations
+   ============================================================ */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animated-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes voice-wave {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+.voice-wave-bar {
+  animation: voice-wave 1s ease-in-out infinite;
+}
+
+@keyframes reaction-burst {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  15% { opacity: 1; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(-120px) scale(1.3); opacity: 0; }
+}
+
+.reaction-burst-item {
+  animation: reaction-burst 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+.typing-dot {
+  animation: typing-bounce 1.4s infinite ease-in-out;
+  border-radius: 9999px;
+}
+
+.typing-dot:nth-child(1) { animation-delay: -0.32s; }
+.typing-dot:nth-child(2) { animation-delay: -0.16s; }
+.typing-dot:nth-child(3) { animation-delay: 0s; }
+
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.slide-up {
+  animation: slide-up 0.3s ease forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-elevated) 25%,
+    rgba(255, 255, 255, 0.05) 50%,
+    var(--bg-elevated) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite;
+  border-radius: var(--radius-md);
+}
+
+.light .skeleton {
+  background: linear-gradient(
+    90deg,
+    #E2E8F0 25%,
+    #F1F5F9 50%,
+    #E2E8F0 75%
+  );
+  background-size: 200% 100%;
+}
+
+/* ============================================================
+   Toast Notifications
+   ============================================================ */
+@keyframes toast-in {
+  from { transform: translateX(110%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes toast-out {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(110%); opacity: 0; }
+}
+
+.toast-enter {
+  animation: toast-in 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.toast-exit {
+  animation: toast-out 0.3s ease forwards;
+}
+
+/* ============================================================
+   Markdown Body Styles (inside chat bubbles)
+   ============================================================ */
+.markdown-body p {
+  margin-bottom: 0.4rem;
+}
+
+.markdown-body p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body code {
+  background-color: rgba(0, 0, 0, 0.25);
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+.light .markdown-body code {
+  background-color: rgba(0, 0, 0, 0.07);
+}
+
+.markdown-body pre {
+  background-color: #0D1117;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  overflow-x: auto;
+  margin: 0.5rem 0;
+}
+
+.light .markdown-body pre {
+  background-color: #1E293B;
+}
+
+.markdown-body pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.875em;
+}
+
+.markdown-body strong {
+  font-weight: 600;
+}
+
+.markdown-body em {
+  font-style: italic;
+}
+
+.markdown-body a {
+  color: var(--text-brand);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* ============================================================
+   Background Orb Decorations
+   ============================================================ */
+.bg-orb {
+  position: absolute;
+  border-radius: 9999px;
+  pointer-events: none;
+  filter: blur(80px);
+  opacity: 0.12;
+}
+
+.light .bg-orb {
+  opacity: 0.07;
+}
+
+/* ============================================================
+   Mobile-Safe Touch Targets
+   ============================================================ */
+@media (max-width: 768px) {
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* ============================================================
+   Textarea Auto-resize helper
+   ============================================================ */
+.auto-resize-textarea {
+  resize: none;
+  overflow-y: hidden;
+  min-height: 44px;
+  max-height: 150px;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Responsive Safe Zones (iOS notch support)
+   ============================================================ */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0);
+}

@@ -1,5 +1,5 @@
 # Stage 1: Build both React client and Express server
-FROM node:24-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ COPY . .
 RUN npm run build
 
 # Stage 2: Create a minimal runner container
-FROM node:24-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 

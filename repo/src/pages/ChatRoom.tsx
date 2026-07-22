@@ -1257,16 +1257,19 @@ export const ChatRoom: React.FC = () => {
               </div>
 
               {/* Mic (hold to record) */}
+              {/* Mic button */}
               {!inputText.trim() && (
                 <button
-                  onMouseDown={startRecording}
-                  onMouseUp={finishVoiceNote}
-                  onMouseLeave={cancelRecording}
-                  onTouchStart={startRecording}
-                  onTouchEnd={finishVoiceNote}
+                  onClick={() => {
+                    if (isRecording) {
+                      finishVoiceNote();
+                    } else {
+                      startRecording();
+                    }
+                  }}
                   className={`icon-btn p-2.5 rounded-xl ${isRecording ? '!bg-red-600 !border-red-600 !text-white animate-pulse' : ''}`}
-                  aria-label="Hold to record voice message"
-                  title="Hold to record voice message"
+                  aria-label={isRecording ? 'Stop and send voice message' : 'Record voice message'}
+                  title={isRecording ? 'Stop & Send' : 'Record voice message'}
                 >
                   <Mic className="h-5 w-5" />
                 </button>
@@ -1289,22 +1292,44 @@ export const ChatRoom: React.FC = () => {
 
             {/* Voice recording overlay */}
             {isRecording && (
-              <div className="absolute inset-0 flex items-center justify-between px-4 rounded-none"
-                style={{ background: 'rgba(0,0,0,0.9)', border: '1px solid rgba(239,68,68,0.3)' }}>
+              <div className="absolute inset-0 z-30 flex items-center justify-between px-4 sm:px-6 py-2 rounded-xl backdrop-blur-xl transition-all"
+                style={{ background: 'var(--bg-modal)', border: '1px solid rgba(239,68,68,0.4)' }}>
                 <div className="flex items-center gap-3">
-                  <div className="flex items-end gap-0.5 h-6">
+                  <div className="flex items-end gap-1 h-5">
                     {[3, 5, 4, 2, 5, 3].map((h, i) => (
                       <span key={i} className="w-1 bg-red-500 rounded-full voice-wave-bar"
                         style={{ height: `${h * 4}px`, animationDelay: `${-i * 0.15}s` }} />
                     ))}
                   </div>
-                  <span className="text-sm font-semibold text-red-400 animate-pulse">Recording...</span>
+                  <span className="text-xs sm:text-sm font-bold text-red-400 animate-pulse">Recording voice note...</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="font-mono font-bold text-sm" style={{ color: 'var(--text-primary)' }}>
+                  <span className="font-mono font-bold text-sm px-2.5 py-1 rounded-lg bg-red-500/10 text-red-400 border border-red-500/20">
                     {Math.floor(recordingTime / 60)}:{(recordingTime % 60).toString().padStart(2, '0')}
                   </span>
-                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Release to send</span>
+                  
+                  {/* Cancel Button */}
+                  <button
+                    onClick={cancelRecording}
+                    className="p-2 rounded-xl text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors flex items-center gap-1 text-xs font-semibold"
+                    title="Cancel recording"
+                    aria-label="Cancel recording"
+                  >
+                    <X className="h-4 w-4" />
+                    <span className="hidden sm:inline">Cancel</span>
+                  </button>
+
+                  {/* Send Voice Note Button */}
+                  <button
+                    onClick={finishVoiceNote}
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white shadow-lg transition-transform hover:scale-105"
+                    style={{ background: 'var(--brand-gradient)' }}
+                    title="Send voice note"
+                    aria-label="Send voice note"
+                  >
+                    <Send className="h-3.5 w-3.5" />
+                    <span>Send</span>
+                  </button>
                 </div>
               </div>
             )}

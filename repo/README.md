@@ -1,32 +1,59 @@
-# React + TypeScript + Vite
+# ⚡ GapChat — Fast, Private & Ephemeral Rooms
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+GapChat is a real-time, privacy-first messaging web application designed for instant temporary chat rooms. Rooms self-destruct automatically after expiration, requiring no sign-up or accounts.
 
-Currently, two official plugins are available:
+![GapChat Banner](public/favicon.svg)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- 🔒 **Zero Sign-Up Required**: Join or create rooms instantly with just a display name.
+- ⏱️ **Auto-Deleting Rooms**: Rooms and all associated data self-destruct after 1 to 48 hours.
+- 🔑 **Password Protection**: Restrict entry to rooms with optional password encryption.
+- 🎙️ **Full-Mesh WebRTC Voice**: High-quality peer-to-peer audio channels directly inside rooms.
+- 📎 **File & Media Sharing**: Upload images, videos, audio notes, PDFs, and ZIP archives up to 100 MB.
+- 🎤 **Voice Messaging**: Integrated press-and-hold audio recorder for instant voice notes.
+- 🎨 **Modern Aesthetics**: Built with custom HSL design tokens, electric cyan-indigo gradients, and responsive glassmorphism in both dark and light modes.
+- 🔍 **In-Room Search & Pinning**: Easily search chat history or pin important messages.
+- ⚡ **Dual Database Strategy**: Uses high-performance MongoDB when configured, or friction-free local JSON file storage (`database.json`) out of the box.
 
-## Expanding the Oxlint configuration
+---
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## 🚀 Quick Start
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+### 1. Install Dependencies
+
+```bash
+npm install --legacy-peer-deps
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+### 2. Run Locally in Development Mode
+
+```bash
+npm run dev
+```
+
+This launches:
+- **Vite Frontend**: `http://localhost:3000`
+- **Express + Socket.io Server**: `http://localhost:5000`
+
+---
+
+## 🐳 Docker Setup
+
+Build and run using Docker Compose:
+
+```bash
+docker-compose up --build
+```
+
+Access the application at `http://localhost:5000`.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React 19, TypeScript, Vite, Tailwind CSS v4, Framer Motion, Lucide Icons, Emoji-Mart
+- **Backend**: Node.js, Express, Socket.io (WebSocket signaling), WebRTC (P2P Mesh audio)
+- **Database**: Mongoose (MongoDB) with fallback to local JSON file adapter

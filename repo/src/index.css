@@ -1,50 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 /* ============================================================
-   Design System — CSS Custom Properties
+   GapChat Design System — Tokens & Utilities
    ============================================================ */
 :root {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Brand Colors */
-  --brand-primary: #7C3AED;
-  --brand-primary-light: #8B5CF6;
-  --brand-secondary: #EC4899;
-  --brand-gradient: linear-gradient(135deg, #7C3AED 0%, #EC4899 100%);
+  /* Brand Colors — Electric Cyan to Indigo */
+  --brand-cyan: #06B6D4;
+  --brand-blue: #3B82F6;
+  --brand-indigo: #6366F1;
+  --brand-pink: #F43F5E;
+  --brand-gradient: linear-gradient(135deg, #06B6D4 0%, #3B82F6 50%, #6366F1 100%);
+  --brand-gradient-hover: linear-gradient(135deg, #0891B2 0%, #2563EB 50%, #4F46E5 100%);
+  --brand-glow: 0 0 25px rgba(6, 182, 212, 0.35);
 
-  /* Dark mode tokens (default) */
-  --bg-base: #0B0F1A;
-  --bg-surface: #111827;
-  --bg-elevated: #1A2234;
-  --bg-card: rgba(255, 255, 255, 0.03);
-  --bg-card-hover: rgba(255, 255, 255, 0.06);
-  --bg-input: rgba(15, 23, 42, 0.6);
-  --bg-input-focus: rgba(15, 23, 42, 0.8);
-  --bg-sidebar: #0D1320;
-  --bg-header: rgba(11, 15, 26, 0.85);
-  --bg-bubble-me: rgba(124, 58, 237, 0.15);
-  --bg-bubble-them: rgba(255, 255, 255, 0.04);
-  --bg-modal: rgba(13, 19, 32, 0.97);
-  --bg-tooltip: #1E2A3A;
+  /* Dark Mode Tokens (Default) */
+  --bg-base: #080C14;
+  --bg-surface: #0E1422;
+  --bg-elevated: #151D30;
+  --bg-card: rgba(14, 20, 34, 0.65);
+  --bg-card-hover: rgba(21, 29, 48, 0.85);
+  --bg-input: rgba(14, 20, 34, 0.8);
+  --bg-input-focus: rgba(21, 29, 48, 0.95);
+  --bg-sidebar: #0B101D;
+  --bg-header: rgba(8, 12, 20, 0.85);
+  --bg-bubble-me: linear-gradient(135deg, rgba(6, 182, 212, 0.22) 0%, rgba(59, 130, 246, 0.25) 100%);
+  --bg-bubble-them: rgba(255, 255, 255, 0.05);
+  --bg-modal: rgba(11, 16, 29, 0.96);
+  --bg-tooltip: #1E293B;
 
-  --border-color: rgba(255, 255, 255, 0.07);
-  --border-strong: rgba(255, 255, 255, 0.12);
-  --border-brand: rgba(124, 58, 237, 0.4);
-  --border-input: rgba(255, 255, 255, 0.08);
-  --border-input-focus: rgba(124, 58, 237, 0.5);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --border-brand: rgba(6, 182, 212, 0.45);
+  --border-input: rgba(255, 255, 255, 0.1);
+  --border-input-focus: rgba(56, 189, 248, 0.6);
 
-  --text-primary: #F1F5F9;
+  --text-primary: #F8FAFC;
   --text-secondary: #94A3B8;
   --text-tertiary: #64748B;
-  --text-brand: #A78BFA;
+  --text-brand: #38BDF8;
   --text-muted: #475569;
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-brand: 0 0 20px rgba(124, 58, 237, 0.2);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.65);
+  --shadow-brand: 0 4px 24px rgba(6, 182, 212, 0.25);
 
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
@@ -62,36 +65,36 @@
    Light Mode Tokens
    ============================================================ */
 .light {
-  --bg-base: #F8FAFC;
+  --bg-base: #F1F5F9;
   --bg-surface: #FFFFFF;
-  --bg-elevated: #F1F5F9;
-  --bg-card: rgba(255, 255, 255, 0.7);
-  --bg-card-hover: rgba(255, 255, 255, 0.9);
-  --bg-input: rgba(255, 255, 255, 0.8);
-  --bg-input-focus: rgba(255, 255, 255, 1);
+  --bg-elevated: #E2E8F0;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: rgba(255, 255, 255, 0.98);
+  --bg-input: #FFFFFF;
+  --bg-input-focus: #FFFFFF;
   --bg-sidebar: #FFFFFF;
   --bg-header: rgba(255, 255, 255, 0.9);
-  --bg-bubble-me: rgba(124, 58, 237, 0.12);
-  --bg-bubble-them: rgba(0, 0, 0, 0.04);
+  --bg-bubble-me: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(59, 130, 246, 0.18) 100%);
+  --bg-bubble-them: #FFFFFF;
   --bg-modal: rgba(255, 255, 255, 0.98);
-  --bg-tooltip: #1E293B;
+  --bg-tooltip: #0F172A;
 
-  --border-color: rgba(0, 0, 0, 0.07);
-  --border-strong: rgba(0, 0, 0, 0.12);
-  --border-brand: rgba(124, 58, 237, 0.3);
-  --border-input: rgba(0, 0, 0, 0.1);
-  --border-input-focus: rgba(124, 58, 237, 0.5);
+  --border-color: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.15);
+  --border-brand: rgba(2, 132, 199, 0.35);
+  --border-input: rgba(0, 0, 0, 0.12);
+  --border-input-focus: rgba(2, 132, 199, 0.5);
 
   --text-primary: #0F172A;
   --text-secondary: #475569;
-  --text-tertiary: #94A3B8;
-  --text-brand: #7C3AED;
-  --text-muted: #CBD5E1;
+  --text-tertiary: #64748B;
+  --text-brand: #0284C7;
+  --text-muted: #94A3B8;
 
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
-  --shadow-brand: 0 0 20px rgba(124, 58, 237, 0.12);
+  --shadow-brand: 0 4px 20px rgba(2, 132, 199, 0.15);
 }
 
 /* ============================================================
@@ -119,45 +122,44 @@
   }
 
   ::selection {
-    background-color: rgba(124, 58, 237, 0.3);
+    background-color: rgba(6, 182, 212, 0.3);
     color: var(--text-primary);
   }
 }
 
-/* ============================================================
-   Tailwind v4 Theme Tokens
-   ============================================================ */
+/* Tailwind Theme Override */
 @theme {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --color-brand-purple: #7C3AED;
-  --color-brand-pink: #EC4899;
-  --color-brand-dark: #0B0F1A;
+  --color-gap-cyan: #06B6D4;
+  --color-gap-blue: #3B82F6;
+  --color-gap-indigo: #6366F1;
+  --color-gap-dark: #080C14;
 }
 
 /* ============================================================
    Glass Morphism Components
    ============================================================ */
 .glass-container {
-  background: linear-gradient(135deg, rgba(11, 15, 26, 0.9) 0%, rgba(7, 10, 18, 0.95) 100%);
+  background: linear-gradient(135deg, rgba(8, 12, 20, 0.92) 0%, rgba(14, 20, 34, 0.95) 100%);
 }
 
 .light .glass-container {
-  background: linear-gradient(135deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.98) 100%);
+  background: linear-gradient(135deg, rgba(241, 245, 249, 0.95) 0%, rgba(255, 255, 255, 0.98) 100%);
 }
 
 .glass-panel {
   background-color: var(--bg-card);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-md);
 }
 
 .glass-panel-heavy {
   background-color: var(--bg-modal);
-  backdrop-filter: blur(32px);
-  -webkit-backdrop-filter: blur(32px);
+  backdrop-filter: blur(36px);
+  -webkit-backdrop-filter: blur(36px);
   border: 1px solid var(--border-strong);
   box-shadow: var(--shadow-lg);
 }
@@ -166,7 +168,6 @@
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
   transition: all var(--transition-base);
-  cursor: pointer;
 }
 
 .glass-card:hover {
@@ -194,7 +195,7 @@
 .glass-input:focus {
   background-color: var(--bg-input-focus);
   border-color: var(--border-input-focus);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.18);
   outline: none;
 }
 
@@ -203,18 +204,19 @@
    ============================================================ */
 .btn-primary {
   background: var(--brand-gradient);
-  color: white;
+  color: #FFFFFF;
   border: none;
   font-weight: 600;
   transition: all var(--transition-fast);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 16px rgba(6, 182, 212, 0.25);
 }
 
 .btn-primary:hover {
-  filter: brightness(1.1);
+  background: var(--brand-gradient-hover);
   transform: translateY(-1px);
-  box-shadow: var(--shadow-brand);
+  box-shadow: var(--brand-glow);
 }
 
 .btn-primary:active {
@@ -222,10 +224,10 @@
 }
 
 .btn-primary:disabled {
-  opacity: 0.4;
+  opacity: 0.45;
   cursor: not-allowed;
   transform: none;
-  filter: none;
+  box-shadow: none;
 }
 
 .btn-ghost {
@@ -256,15 +258,16 @@
 }
 
 .icon-btn:hover {
-  color: var(--brand-primary-light);
+  color: var(--text-brand);
   border-color: var(--border-brand);
-  background-color: rgba(124, 58, 237, 0.08);
+  background-color: rgba(6, 182, 212, 0.12);
 }
 
 .icon-btn.active {
-  background-color: var(--brand-primary);
-  border-color: var(--brand-primary);
+  background-color: var(--brand-cyan);
+  border-color: var(--brand-cyan);
   color: white;
+  box-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
 }
 
 /* ============================================================
@@ -286,9 +289,9 @@
   background: linear-gradient(
     to right,
     rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.12) 40%,
-    rgba(255, 255, 255, 0.18) 50%,
-    rgba(255, 255, 255, 0.12) 60%,
+    rgba(255, 255, 255, 0.15) 40%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0.15) 60%,
     rgba(255, 255, 255, 0) 100%
   );
   transform: skewX(-20deg) translateX(-100%);
@@ -298,7 +301,7 @@
 
 .glow-btn:hover::after {
   transform: skewX(-20deg) translateX(100%);
-  transition: transform 0.6s ease;
+  transition: transform 0.65s ease;
 }
 
 /* ============================================================
@@ -306,12 +309,12 @@
    ============================================================ */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
+  width: 5px;
+  height: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -319,51 +322,50 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   border-radius: 9999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 58, 237, 0.4);
+  background: rgba(6, 182, 212, 0.45);
 }
 
 .light .custom-scrollbar {
-  scrollbar-color: rgba(0, 0, 0, 0.1) transparent;
+  scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
 }
 
 .light .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.15);
 }
 
 .light .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 58, 237, 0.3);
+  background: rgba(2, 132, 199, 0.4);
 }
 
 /* ============================================================
-   Chat Bubble Styles (WhatsApp-inspired)
+   Chat Bubble Styles
    ============================================================ */
 .bubble-me {
-  background-color: var(--bg-bubble-me);
-  border: 1px solid rgba(124, 58, 237, 0.2);
-  border-radius: var(--radius-xl) var(--radius-sm) var(--radius-xl) var(--radius-xl);
+  background: var(--bg-bubble-me);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 18px 18px 4px 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.light .bubble-me {
+  border: 1px solid rgba(2, 132, 199, 0.25);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .bubble-them {
   background-color: var(--bg-bubble-them);
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm) var(--radius-xl) var(--radius-xl) var(--radius-xl);
+  border-radius: 18px 18px 18px 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* ============================================================
-   Sidebar Drawer (Mobile)
-   ============================================================ */
-.sidebar-drawer {
-  transform: translateX(-100%);
-  transition: transform var(--transition-slow);
-}
-
-.sidebar-drawer.open {
-  transform: translateX(0);
+.light .bubble-them {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
 /* ============================================================
@@ -371,7 +373,7 @@
    ============================================================ */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
 }
 
 .animated-float {
@@ -379,23 +381,12 @@
 }
 
 @keyframes voice-wave {
-  0%, 100% { transform: scaleY(0.3); }
+  0%, 100% { transform: scaleY(0.25); }
   50% { transform: scaleY(1); }
 }
 
 .voice-wave-bar {
   animation: voice-wave 1s ease-in-out infinite;
-}
-
-@keyframes reaction-burst {
-  0% { transform: translateY(0) scale(0.5); opacity: 0; }
-  15% { opacity: 1; }
-  90% { opacity: 0.8; }
-  100% { transform: translateY(-120px) scale(1.3); opacity: 0; }
-}
-
-.reaction-burst-item {
-  animation: reaction-burst 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
 }
 
 @keyframes typing-bounce {
@@ -411,20 +402,6 @@
 .typing-dot:nth-child(1) { animation-delay: -0.32s; }
 .typing-dot:nth-child(2) { animation-delay: -0.16s; }
 .typing-dot:nth-child(3) { animation-delay: 0s; }
-
-@keyframes slide-up {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.slide-up {
-  animation: slide-up 0.3s ease forwards;
-}
-
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
 
 @keyframes skeleton-shimmer {
   0% { background-position: -200% 0; }
@@ -454,7 +431,7 @@
 }
 
 /* ============================================================
-   Toast Notifications
+   Toast Animations
    ============================================================ */
 @keyframes toast-in {
   from { transform: translateX(110%); opacity: 0; }
@@ -475,7 +452,7 @@
 }
 
 /* ============================================================
-   Markdown Body Styles (inside chat bubbles)
+   Markdown Body Styles
    ============================================================ */
 .markdown-body p {
   margin-bottom: 0.4rem;
@@ -498,8 +475,8 @@
 }
 
 .markdown-body pre {
-  background-color: #0D1117;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #0B101D;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.75rem 1rem;
   border-radius: var(--radius-md);
   font-family: var(--font-mono);
@@ -532,46 +509,27 @@
   text-underline-offset: 2px;
 }
 
-/* ============================================================
-   Background Orb Decorations
-   ============================================================ */
+/* Background Orb Decorations */
 .bg-orb {
   position: absolute;
   border-radius: 9999px;
   pointer-events: none;
-  filter: blur(80px);
-  opacity: 0.12;
+  filter: blur(100px);
+  opacity: 0.14;
 }
 
 .light .bg-orb {
-  opacity: 0.07;
+  opacity: 0.08;
 }
 
-/* ============================================================
-   Mobile-Safe Touch Targets
-   ============================================================ */
-@media (max-width: 768px) {
-  .touch-target {
-    min-height: 44px;
-    min-width: 44px;
-  }
-}
-
-/* ============================================================
-   Textarea Auto-resize helper
-   ============================================================ */
 .auto-resize-textarea {
   resize: none;
-  overflow-y: hidden;
   min-height: 44px;
   max-height: 150px;
   overflow-y: auto;
   line-height: 1.5;
 }
 
-/* ============================================================
-   Responsive Safe Zones (iOS notch support)
-   ============================================================ */
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom, 0);
 }

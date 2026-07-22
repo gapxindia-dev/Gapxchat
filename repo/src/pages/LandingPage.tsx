@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Shield, Users, Zap, Clock, Key, ArrowRight,
-  Moon, Sun, X, Eye, EyeOff, ChevronDown, Lock
+  MessageSquare, Shield, Users, Zap, Clock, Key, ArrowRight,
+  Moon, Sun, X, Eye, EyeOff, ChevronDown, Lock, Sparkles, CheckCircle2, Mic, Paperclip
 } from 'lucide-react';
 import { useSocket } from '../contexts/SocketContext.js';
 import { useTheme } from '../contexts/ThemeContext.js';
@@ -13,7 +13,7 @@ export const LandingPage: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const { addToast } = useToast();
 
-  // Modal / Panel state
+  // Modal state
   const [activeModal, setActiveModal] = useState<'create' | 'join' | null>(null);
 
   // Create Room form
@@ -36,9 +36,7 @@ export const LandingPage: React.FC = () => {
   const [requiresPassword, setRequiresPassword] = useState(false);
   const [roomNameFound, setRoomNameFound] = useState('');
 
-  // ============================================================
   // Validation helpers
-  // ============================================================
   const validateCreate = () => {
     const errors: Record<string, string> = {};
     if (!createUsername.trim()) errors.username = 'Username is required.';
@@ -62,9 +60,7 @@ export const LandingPage: React.FC = () => {
     return errors;
   };
 
-  // ============================================================
   // Handler: Create Room
-  // ============================================================
   const handleCreateRoom = async (e: React.FormEvent) => {
     e.preventDefault();
     const errors = validateCreate();
@@ -96,9 +92,7 @@ export const LandingPage: React.FC = () => {
     }
   };
 
-  // ============================================================
   // Handler: Verify Room Code (Join Step 1)
-  // ============================================================
   const handleVerifyRoomCode = async (e: React.FormEvent) => {
     e.preventDefault();
     const errors = validateJoinStep1();
@@ -126,9 +120,7 @@ export const LandingPage: React.FC = () => {
     }
   };
 
-  // ============================================================
   // Handler: Submit Join (Join Step 2)
-  // ============================================================
   const handleJoinRoom = async (e: React.FormEvent) => {
     e.preventDefault();
     const errors = validateJoinStep2();
@@ -175,112 +167,136 @@ export const LandingPage: React.FC = () => {
     resetJoinForm();
   };
 
-  // ============================================================
-  // Feature list
-  // ============================================================
   const features = [
-    { icon: Clock, title: 'Auto Cleanup', desc: 'Rooms self-delete after expiry' },
-    { icon: Key, title: 'Access Keys', desc: 'Short codes & password gates' },
-    { icon: Zap, title: 'WebRTC Voice', desc: 'Peer-to-peer voice channels' },
-    { icon: Users, title: 'Rich Reactions', desc: 'Emoji, replies, pins & kick' },
+    { icon: Clock, title: 'Self-Destructing', desc: 'Rooms automatically delete after expiration' },
+    { icon: Key, title: 'Password Gated', desc: 'Optional PIN security for your private channels' },
+    { icon: Zap, title: 'Real-Time Voice Mesh', desc: 'Crystal-clear peer-to-peer audio calls' },
+    { icon: Users, title: 'Rich Media & Reactions', desc: 'Share files, GIFs, voice notes & emojis' },
   ];
 
   return (
     <div className="min-h-screen w-full flex flex-col relative overflow-hidden transition-colors duration-300"
       style={{ background: 'var(--bg-base)', color: 'var(--text-primary)' }}>
 
-      {/* Background Decorative Orbs */}
-      <div className="bg-orb w-[600px] h-[600px] bg-violet-600 top-[-200px] left-[-150px]" />
-      <div className="bg-orb w-[500px] h-[500px] bg-pink-600 bottom-[-100px] right-[-100px]" />
-      <div className="bg-orb w-[300px] h-[300px] bg-blue-600 top-[40%] left-[30%]" />
+      {/* Ambient background glow orbs */}
+      <div className="bg-orb w-[650px] h-[650px] bg-cyan-500 top-[-220px] left-[-160px]" />
+      <div className="bg-orb w-[550px] h-[550px] bg-indigo-600 bottom-[-120px] right-[-120px]" />
+      <div className="bg-orb w-[350px] h-[350px] bg-blue-500 top-[45%] left-[25%]" />
 
-      {/* ====================================================
-          HEADER
-          ==================================================== */}
-      <header className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between">
-        <div className="flex items-center gap-2.5">
-          <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-xl flex items-center justify-center shadow-lg"
+      {/* HEADER */}
+      <header className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl flex items-center justify-center shadow-lg"
             style={{ background: 'var(--brand-gradient)', boxShadow: 'var(--shadow-brand)' }}>
-            <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+            <MessageSquare className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
           </div>
-          <span className="text-lg sm:text-xl font-bold tracking-tight bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
-            Antigravity Chat
-          </span>
+          <div>
+            <span className="text-xl sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
+              GapChat
+            </span>
+            <span className="hidden sm:inline-block ml-2 text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full"
+              style={{ background: 'rgba(6,182,212,0.12)', color: 'var(--text-brand)', border: '1px solid rgba(6,182,212,0.25)' }}>
+              Ephemeral Sandbox
+            </span>
+          </div>
         </div>
 
-        <button
-          onClick={toggleTheme}
-          className="icon-btn p-2 sm:p-2.5 rounded-xl"
-          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-        >
-          {theme === 'dark'
-            ? <Sun className="h-4 w-4 sm:h-5 sm:w-5" />
-            : <Moon className="h-4 w-4 sm:h-5 sm:w-5" />
-          }
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={toggleTheme}
+            className="icon-btn p-2.5 rounded-xl"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark'
+              ? <Sun className="h-5 w-5" />
+              : <Moon className="h-5 w-5" />
+            }
+          </button>
+        </div>
       </header>
 
-      {/* ====================================================
-          HERO SECTION
-          ==================================================== */}
-      <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20">
+      {/* HERO SECTION */}
+      <main className="relative z-10 flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
 
-        {/* Left: Branding & Info */}
-        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left max-w-xl w-full">
+        {/* Left Column: Branding & Actions */}
+        <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left max-w-2xl w-full">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-5 sm:mb-6"
+            transition={{ duration: 0.4 }}
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-6"
             style={{
-              border: '1px solid rgba(124,58,237,0.25)',
-              background: 'rgba(124,58,237,0.08)',
+              border: '1px solid rgba(6, 182, 212, 0.3)',
+              background: 'rgba(6, 182, 212, 0.08)',
               color: 'var(--text-brand)'
             }}
           >
             <Shield className="h-3.5 w-3.5" />
-            End-to-End Ephemeral Encounters
+            Zero Accounts · Zero Logs · 100% Temporary
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] mb-4 sm:mb-6"
+            className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] mb-5"
           >
-            Secure, Private{' '}
-            <span className="bg-gradient-to-r from-violet-400 via-pink-400 to-amber-300 bg-clip-text text-transparent">
-              Ephemeral Chat
-            </span>{' '}
-            Rooms.
+            Bridge the gap with{' '}
+            <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
+              Instant Private Rooms.
+            </span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base sm:text-lg leading-relaxed mb-8 sm:mb-10"
+            className="text-base sm:text-lg leading-relaxed mb-8 max-w-xl"
             style={{ color: 'var(--text-secondary)' }}
           >
-            Create secure, temporary rooms that delete themselves automatically.
-            No login required. Voice chats, file attachments, emoji reactions, and real-time encryption.
+            Create disposable, password-protected rooms in seconds. Share text, files, voice notes, and live audio channels without leaving a digital footprint.
           </motion.p>
+
+          {/* Main Action Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mb-10"
+          >
+            <button
+              onClick={() => setActiveModal('create')}
+              className="btn-primary glow-btn px-7 py-3.5 rounded-2xl text-base font-bold flex items-center justify-center gap-3 w-full sm:w-auto group"
+            >
+              <Users className="h-5 w-5" />
+              Create a Room
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </button>
+
+            <button
+              onClick={() => setActiveModal('join')}
+              className="btn-ghost px-7 py-3.5 rounded-2xl text-base font-bold flex items-center justify-center gap-3 w-full sm:w-auto hover:scale-[1.02] transition-transform"
+            >
+              <Key className="h-5 w-5" style={{ color: 'var(--text-brand)' }} />
+              Join with Code
+            </button>
+          </motion.div>
 
           {/* Feature Grid */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="grid grid-cols-2 gap-4 sm:gap-6 w-full"
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="grid grid-cols-2 gap-4 sm:gap-6 w-full pt-2"
           >
             {features.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="flex gap-3 items-start">
-                <div className="h-9 w-9 rounded-lg flex items-center justify-center shrink-0"
+              <div key={title} className="flex gap-3 items-start text-left">
+                <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0"
                   style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-color)', color: 'var(--text-brand)' }}>
                   <Icon className="h-4 w-4" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>{title}</h4>
+                  <h4 className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>{title}</h4>
                   <p className="text-xs mt-0.5" style={{ color: 'var(--text-tertiary)' }}>{desc}</p>
                 </div>
               </div>
@@ -288,90 +304,111 @@ export const LandingPage: React.FC = () => {
           </motion.div>
         </div>
 
-        {/* Right: Action Cards */}
-        <div className="flex-1 w-full max-w-sm flex flex-col gap-4">
-          {/* Create Room Card */}
-          <motion.button
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            onClick={() => setActiveModal('create')}
-            className="glass-card glass-panel p-5 sm:p-6 rounded-2xl flex items-center justify-between group w-full text-left"
-            aria-label="Create a new chat room"
-          >
-            <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-xl flex items-center justify-center transition-all group-hover:scale-110"
-                style={{
-                  background: 'rgba(124,58,237,0.1)',
-                  border: '1px solid rgba(124,58,237,0.2)',
-                  color: 'var(--text-brand)'
-                }}>
-                <Users className="h-6 w-6" />
+        {/* Right Column: Live App Preview Mockup */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="flex-1 w-full max-w-lg relative"
+        >
+          {/* Glass Card Container simulating Chat interface */}
+          <div className="glass-panel rounded-3xl p-5 sm:p-6 shadow-2xl relative overflow-hidden"
+            style={{ background: 'var(--bg-card)', border: '1px solid var(--border-strong)' }}>
+
+            {/* Mockup Header */}
+            <div className="flex items-center justify-between pb-4 mb-4" style={{ borderBottom: '1px solid var(--border-color)' }}>
+              <div className="flex items-center gap-3">
+                <div className="h-3 w-3 rounded-full bg-emerald-500 animate-pulse" />
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-extrabold text-sm" style={{ color: 'var(--text-primary)' }}># Dev Sync Alpha</h3>
+                    <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                      GAP-982X
+                    </span>
+                  </div>
+                  <p className="text-[11px]" style={{ color: 'var(--text-tertiary)' }}>3 members online · Auto-deletes in 23h</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Create Room</h3>
-                <p className="text-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-                  Start a new private chat channel
-                </p>
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold">
+                <Sparkles className="h-3 w-3" /> Encrypted
               </div>
             </div>
-            <ArrowRight className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1"
-              style={{ color: 'var(--text-tertiary)' }} />
-          </motion.button>
 
-          {/* Join Room Card */}
-          <motion.button
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            onClick={() => setActiveModal('join')}
-            className="glass-card glass-panel p-5 sm:p-6 rounded-2xl flex items-center justify-between group w-full text-left"
-            aria-label="Join an existing chat room"
-          >
-            <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-xl flex items-center justify-center transition-all group-hover:scale-110"
-                style={{
-                  background: 'rgba(236,72,153,0.1)',
-                  border: '1px solid rgba(236,72,153,0.2)',
-                  color: '#EC4899'
-                }}>
-                <Key className="h-6 w-6" />
+            {/* Mockup Messages Stream */}
+            <div className="space-y-3.5 py-2 text-xs">
+              {/* Message 1 */}
+              <div className="flex items-end gap-2">
+                <div className="h-7 w-7 rounded-full bg-indigo-600 text-white font-bold flex items-center justify-center shrink-0 text-[10px]">
+                  AL
+                </div>
+                <div className="bubble-them px-3.5 py-2.5 max-w-[80%]">
+                  <span className="font-bold text-[11px] block mb-0.5 text-indigo-400">Alex</span>
+                  Hey team! Joined the room. Is the new encryption layer deployed? 🚀
+                  <span className="text-[9px] block text-right mt-1 text-slate-500">10:42 AM</span>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Join Room</h3>
-                <p className="text-sm mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-                  Enter a room code to join
-                </p>
+
+              {/* Message 2 (Me) */}
+              <div className="flex items-end gap-2 justify-end">
+                <div className="bubble-me px-3.5 py-2.5 max-w-[80%]">
+                  <span className="font-bold text-[11px] block mb-0.5 text-cyan-300">You</span>
+                  Yes! All messages self-destruct after expiry. Voice channel is also active.
+                  <span className="text-[9px] block text-right mt-1 text-cyan-400/70">10:43 AM · Read ✓✓</span>
+                </div>
+              </div>
+
+              {/* Voice Message preview */}
+              <div className="flex items-end gap-2">
+                <div className="h-7 w-7 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center shrink-0 text-[10px]">
+                  KA
+                </div>
+                <div className="bubble-them px-3.5 py-2.5 max-w-[85%]">
+                  <span className="font-bold text-[11px] block mb-1 text-emerald-400">Kunal</span>
+                  <div className="flex items-center gap-2 p-2 rounded-xl bg-black/20 border border-white/5">
+                    <button className="h-7 w-7 rounded-full bg-cyan-500 text-white flex items-center justify-center shrink-0">
+                      ▶
+                    </button>
+                    <div className="flex-1">
+                      <div className="h-1.5 bg-cyan-500/40 rounded-full w-full overflow-hidden">
+                        <div className="h-full bg-cyan-400 w-2/3" />
+                      </div>
+                      <span className="text-[9px] text-slate-400 mt-1 block">🎤 Voice note · 0:14</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            <ArrowRight className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1"
-              style={{ color: 'var(--text-tertiary)' }} />
-          </motion.button>
 
-          {/* Security Badge */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="flex items-center justify-center gap-2 pt-2"
-          >
-            <Shield className="h-3.5 w-3.5" style={{ color: 'var(--text-muted)' }} />
-            <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-              No account required · No data stored after expiry
-            </span>
-          </motion.div>
-        </div>
+            {/* Mockup Input Box */}
+            <div className="mt-4 pt-3 flex items-center gap-2" style={{ borderTop: '1px solid var(--border-color)' }}>
+              <div className="flex-1 px-3.5 py-2 rounded-xl glass-input text-xs text-slate-400 flex items-center justify-between">
+                <span>Type a message in #Dev Sync...</span>
+                <div className="flex items-center gap-2 text-slate-500">
+                  <Paperclip className="h-3.5 w-3.5" />
+                  <Mic className="h-3.5 w-3.5" />
+                </div>
+              </div>
+              <div className="h-9 w-9 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white flex items-center justify-center shrink-0 shadow-md">
+                <ArrowRight className="h-4 w-4" />
+              </div>
+            </div>
+
+            {/* Badge overlay */}
+            <div className="absolute -bottom-4 -right-4 px-4 py-2 rounded-2xl glass-panel-heavy shadow-2xl flex items-center gap-2 text-xs font-bold border border-cyan-500/30">
+              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+              <span>Real-Time Socket.io Mesh</span>
+            </div>
+          </div>
+        </motion.div>
       </main>
 
-      {/* Footer */}
-      <footer className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-4 text-center text-xs"
+      {/* FOOTER */}
+      <footer className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 text-center text-xs"
         style={{ color: 'var(--text-muted)', borderTop: '1px solid var(--border-color)' }}>
-        © {new Date().getFullYear()} Antigravity Chat · Secure temporary socket room sandbox
+        © {new Date().getFullYear()} GapChat · Secure Ephemeral Rooms · No tracking or storage after expiration
       </footer>
 
-      {/* ====================================================
-          MODALS
-          ==================================================== */}
+      {/* MODALS */}
       <AnimatePresence>
 
         {/* ---- CREATE ROOM MODAL ---- */}
@@ -382,32 +419,31 @@ export const LandingPage: React.FC = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeModal}
-              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/75 backdrop-blur-md"
             />
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              initial={{ opacity: 0, scale: 0.94, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.92, y: 20 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-              className="glass-panel-heavy rounded-2xl w-full max-w-md relative z-10"
-              style={{ overflow: 'hidden' }}
+              exit={{ opacity: 0, scale: 0.94, y: 20 }}
+              transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+              className="glass-panel-heavy rounded-3xl w-full max-w-md relative z-10 overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Modal Header */}
               <div className="px-6 pt-6 pb-4 flex items-center justify-between"
                 style={{ borderBottom: '1px solid var(--border-color)' }}>
                 <div className="flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-xl flex items-center justify-center"
-                    style={{ background: 'rgba(124,58,237,0.12)', color: 'var(--text-brand)' }}>
+                  <div className="h-10 w-10 rounded-2xl flex items-center justify-center shadow-lg"
+                    style={{ background: 'var(--brand-gradient)', color: 'white' }}>
                     <Users className="h-5 w-5" />
                   </div>
                   <div>
                     <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Create Private Room</h2>
-                    <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>Get a unique invitation code</p>
+                    <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>Get a unique shareable invite code</p>
                   </div>
                 </div>
-                <button onClick={closeModal} className="icon-btn p-1.5 rounded-lg" aria-label="Close modal">
+                <button onClick={closeModal} className="icon-btn p-2 rounded-xl" aria-label="Close modal">
                   <X className="h-4 w-4" />
                 </button>
               </div>
@@ -416,14 +452,14 @@ export const LandingPage: React.FC = () => {
               <form onSubmit={handleCreateRoom} className="px-6 py-5 space-y-4">
                 {/* Username */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5"
+                  <label className="block text-xs font-bold uppercase tracking-wider mb-1.5"
                     style={{ color: 'var(--text-secondary)' }}>
                     Your Username <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Maverick"
+                    placeholder="e.g. Alex"
                     value={createUsername}
                     onChange={(e) => { setCreateUsername(e.target.value); setCreateErrors(p => ({ ...p, username: '' })); }}
                     className="w-full px-4 py-2.5 rounded-xl glass-input text-sm"
@@ -435,14 +471,14 @@ export const LandingPage: React.FC = () => {
 
                 {/* Room Name */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5"
+                  <label className="block text-xs font-bold uppercase tracking-wider mb-1.5"
                     style={{ color: 'var(--text-secondary)' }}>
                     Room Name <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     required
-                    placeholder="e.g. Frontend Team Sync"
+                    placeholder="e.g. Product Design Huddle"
                     value={createRoomName}
                     onChange={(e) => { setCreateRoomName(e.target.value); setCreateErrors(p => ({ ...p, roomName: '' })); }}
                     className="w-full px-4 py-2.5 rounded-xl glass-input text-sm"
@@ -454,15 +490,14 @@ export const LandingPage: React.FC = () => {
 
                 {/* Password */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5 flex items-center justify-between"
+                  <label className="block text-xs font-bold uppercase tracking-wider mb-1.5 flex items-center justify-between"
                     style={{ color: 'var(--text-secondary)' }}>
-                    <span className="flex items-center gap-1.5"><Lock className="h-3 w-3" /> Password <span className="font-normal normal-case opacity-70">(optional)</span></span>
-                    <span className="text-[10px]" style={{ color: 'var(--text-brand)' }}>Restricts entry</span>
+                    <span className="flex items-center gap-1.5"><Lock className="h-3 w-3" /> Password Protection <span className="font-normal normal-case opacity-70">(optional)</span></span>
                   </label>
                   <div className="relative">
                     <input
                       type={createShowPassword ? 'text' : 'password'}
-                      placeholder="Leave empty for public access"
+                      placeholder="Leave blank for public entry"
                       value={createPassword}
                       onChange={(e) => setCreatePassword(e.target.value)}
                       className="w-full px-4 py-2.5 pr-11 rounded-xl glass-input text-sm"
@@ -472,7 +507,6 @@ export const LandingPage: React.FC = () => {
                       onClick={() => setCreateShowPassword(p => !p)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded"
                       style={{ color: 'var(--text-tertiary)' }}
-                      aria-label={createShowPassword ? 'Hide password' : 'Show password'}
                     >
                       {createShowPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                     </button>
@@ -481,9 +515,9 @@ export const LandingPage: React.FC = () => {
 
                 {/* Auto-delete */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5"
+                  <label className="block text-xs font-bold uppercase tracking-wider mb-1.5"
                     style={{ color: 'var(--text-secondary)' }}>
-                    Auto-Delete After
+                    Auto-Delete Room After
                   </label>
                   <div className="relative">
                     <select
@@ -506,14 +540,14 @@ export const LandingPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="btn-ghost flex-1 py-2.5 text-sm font-semibold rounded-xl"
+                    className="btn-ghost flex-1 py-3 text-sm font-bold rounded-xl"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={createLoading}
-                    className="btn-primary glow-btn flex-1 py-2.5 text-sm font-semibold rounded-xl"
+                    className="btn-primary glow-btn flex-1 py-3 text-sm font-bold rounded-xl"
                   >
                     {createLoading ? (
                       <span className="flex items-center justify-center gap-2">
@@ -536,34 +570,33 @@ export const LandingPage: React.FC = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeModal}
-              className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+              className="absolute inset-0 bg-black/75 backdrop-blur-md"
             />
 
             <motion.div
-              initial={{ opacity: 0, scale: 0.92, y: 20 }}
+              initial={{ opacity: 0, scale: 0.94, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.92, y: 20 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-              className="glass-panel-heavy rounded-2xl w-full max-w-md relative z-10"
-              style={{ overflow: 'hidden' }}
+              exit={{ opacity: 0, scale: 0.94, y: 20 }}
+              transition={{ type: 'spring', stiffness: 320, damping: 28 }}
+              className="glass-panel-heavy rounded-3xl w-full max-w-md relative z-10 overflow-hidden"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal Header */}
+              {/* Header */}
               <div className="px-6 pt-6 pb-4 flex items-center justify-between"
                 style={{ borderBottom: '1px solid var(--border-color)' }}>
                 <div className="flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-xl flex items-center justify-center"
-                    style={{ background: 'rgba(236,72,153,0.12)', color: '#EC4899' }}>
+                  <div className="h-10 w-10 rounded-2xl flex items-center justify-center shadow-lg"
+                    style={{ background: 'linear-gradient(135deg, #3B82F6, #6366F1)', color: 'white' }}>
                     <Key className="h-5 w-5" />
                   </div>
                   <div>
                     <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>Join Chat Room</h2>
                     <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-                      {joinStep === 1 ? 'Enter your invitation code' : `Found: "${roomNameFound}"`}
+                      {joinStep === 1 ? 'Enter the invitation code' : `Found room: "${roomNameFound}"`}
                     </p>
                   </div>
                 </div>
-                <button onClick={closeModal} className="icon-btn p-1.5 rounded-lg" aria-label="Close modal">
+                <button onClick={closeModal} className="icon-btn p-2 rounded-xl" aria-label="Close modal">
                   <X className="h-4 w-4" />
                 </button>
               </div>
@@ -574,70 +607,67 @@ export const LandingPage: React.FC = () => {
                   <div key={step} className="flex items-center gap-2">
                     <div className={`h-6 w-6 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
                       joinStep === step
-                        ? 'bg-violet-600 text-white'
+                        ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/30'
                         : step < joinStep
-                          ? 'bg-emerald-600 text-white'
+                          ? 'bg-emerald-500 text-white'
                           : 'text-xs font-medium'
                     }`}
                       style={joinStep !== step && step >= joinStep ? { background: 'var(--bg-elevated)', color: 'var(--text-tertiary)' } : {}}>
                       {step < joinStep ? '✓' : step}
                     </div>
-                    <span className="text-xs" style={{ color: step === joinStep ? 'var(--text-primary)' : 'var(--text-tertiary)' }}>
-                      {step === 1 ? 'Find Room' : 'Enter Credentials'}
+                    <span className="text-xs font-semibold" style={{ color: step === joinStep ? 'var(--text-primary)' : 'var(--text-tertiary)' }}>
+                      {step === 1 ? 'Room Code' : 'Credentials'}
                     </span>
                     {step < 2 && <div className="h-px w-6 ml-1" style={{ background: 'var(--border-color)' }} />}
                   </div>
                 ))}
               </div>
 
-              {/* Modal Body */}
+              {/* Body */}
               <div className="px-6 py-5">
                 <AnimatePresence mode="wait">
-                  {/* Step 1: Code entry */}
                   {joinStep === 1 && (
                     <motion.form
                       key="step1"
-                      initial={{ opacity: 0, x: -20 }}
+                      initial={{ opacity: 0, x: -15 }}
                       animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
+                      exit={{ opacity: 0, x: -15 }}
                       onSubmit={handleVerifyRoomCode}
                       className="space-y-4"
                     >
                       <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5"
+                        <label className="block text-xs font-bold uppercase tracking-wider mb-1.5"
                           style={{ color: 'var(--text-secondary)' }}>
-                          Room Code <span className="text-red-400">*</span>
+                          Enter 6-Character Code <span className="text-red-400">*</span>
                         </label>
                         <input
                           type="text"
                           required
                           autoFocus
-                          placeholder="e.g. A8XJQ2"
+                          placeholder="e.g. X9K2M4"
                           value={joinCode}
                           onChange={(e) => { setJoinCode(e.target.value.toUpperCase()); setJoinErrors(p => ({ ...p, code: '' })); }}
-                          className="w-full px-4 py-3 rounded-xl glass-input text-xl font-bold text-center tracking-[0.3em] uppercase"
-                          style={{ letterSpacing: '0.3em' }}
+                          className="w-full px-4 py-3 rounded-2xl glass-input text-xl font-bold text-center tracking-[0.35em] uppercase font-mono"
                           maxLength={10}
                         />
                         {joinErrors.code && (
-                          <p className="text-xs text-red-400 mt-1">{joinErrors.code}</p>
+                          <p className="text-xs text-red-400 mt-1.5">{joinErrors.code}</p>
                         )}
                       </div>
 
-                      <div className="flex gap-3 pt-1">
-                        <button type="button" onClick={closeModal} className="btn-ghost flex-1 py-2.5 text-sm font-semibold rounded-xl">
+                      <div className="flex gap-3 pt-2">
+                        <button type="button" onClick={closeModal} className="btn-ghost flex-1 py-3 text-sm font-bold rounded-xl">
                           Cancel
                         </button>
                         <button
                           type="submit"
                           disabled={joinLoading}
-                          className="btn-primary glow-btn flex-1 py-2.5 text-sm font-semibold rounded-xl"
-                          style={{ background: 'linear-gradient(135deg, #EC4899, #7C3AED)' }}
+                          className="btn-primary glow-btn flex-1 py-3 text-sm font-bold rounded-xl"
                         >
                           {joinLoading ? (
                             <span className="flex items-center justify-center gap-2">
                               <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
-                              Checking...
+                              Searching...
                             </span>
                           ) : 'Find Room →'}
                         </button>
@@ -645,43 +675,43 @@ export const LandingPage: React.FC = () => {
                     </motion.form>
                   )}
 
-                  {/* Step 2: Credentials */}
                   {joinStep === 2 && (
                     <motion.form
                       key="step2"
-                      initial={{ opacity: 0, x: 20 }}
+                      initial={{ opacity: 0, x: 15 }}
                       animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: 20 }}
+                      exit={{ opacity: 0, x: 15 }}
                       onSubmit={handleJoinRoom}
                       className="space-y-4"
                     >
-                      {/* Room found banner */}
-                      <div className="p-3 rounded-xl flex items-center gap-3"
-                        style={{ background: 'rgba(124,58,237,0.08)', border: '1px solid rgba(124,58,237,0.2)' }}>
-                        <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
-                          style={{ background: 'rgba(124,58,237,0.2)', color: 'var(--text-brand)' }}>
-                          <Shield className="h-4 w-4" />
+                      {/* Room banner */}
+                      <div className="p-3.5 rounded-2xl flex items-center gap-3"
+                        style={{ background: 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.25)' }}>
+                        <div className="h-9 w-9 rounded-xl flex items-center justify-center shrink-0 bg-cyan-500/20 text-cyan-400 font-bold">
+                          <MessageSquare className="h-5 w-5" />
                         </div>
                         <div>
-                          <p className="text-[10px] uppercase tracking-wider" style={{ color: 'var(--text-tertiary)' }}>Room Found</p>
-                          <p className="font-bold text-sm" style={{ color: 'var(--text-brand)' }}>{roomNameFound}</p>
+                          <p className="text-[10px] uppercase tracking-wider font-bold" style={{ color: 'var(--text-tertiary)' }}>Target Room</p>
+                          <p className="font-extrabold text-sm" style={{ color: 'var(--text-brand)' }}>{roomNameFound}</p>
                         </div>
                         {requiresPassword && (
-                          <Lock className="h-4 w-4 ml-auto shrink-0" style={{ color: '#EC4899' }} />
+                          <div className="ml-auto flex items-center gap-1 text-xs text-amber-400 font-semibold px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20">
+                            <Lock className="h-3 w-3" /> Password
+                          </div>
                         )}
                       </div>
 
                       {/* Username */}
                       <div>
-                        <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5"
+                        <label className="block text-xs font-bold uppercase tracking-wider mb-1.5"
                           style={{ color: 'var(--text-secondary)' }}>
-                          Your Username <span className="text-red-400">*</span>
+                          Your Display Name <span className="text-red-400">*</span>
                         </label>
                         <input
                           type="text"
                           required
                           autoFocus
-                          placeholder="e.g. Iceman"
+                          placeholder="e.g. Jordan"
                           value={joinUsername}
                           onChange={(e) => { setJoinUsername(e.target.value); setJoinErrors(p => ({ ...p, username: '' })); }}
                           className="w-full px-4 py-2.5 rounded-xl glass-input text-sm"
@@ -691,10 +721,10 @@ export const LandingPage: React.FC = () => {
                         )}
                       </div>
 
-                      {/* Password (if required) */}
+                      {/* Password */}
                       {requiresPassword && (
                         <div>
-                          <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5"
+                          <label className="block text-xs font-bold uppercase tracking-wider mb-1.5"
                             style={{ color: 'var(--text-secondary)' }}>
                             Room Password <span className="text-red-400">*</span>
                           </label>
@@ -712,7 +742,6 @@ export const LandingPage: React.FC = () => {
                               onClick={() => setJoinShowPassword(p => !p)}
                               className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded"
                               style={{ color: 'var(--text-tertiary)' }}
-                              aria-label={joinShowPassword ? 'Hide password' : 'Show password'}
                             >
                               {joinShowPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                             </button>
@@ -723,23 +752,22 @@ export const LandingPage: React.FC = () => {
                         </div>
                       )}
 
-                      <div className="flex gap-3 pt-1">
+                      <div className="flex gap-3 pt-2">
                         <button type="button" onClick={() => { setJoinStep(1); setJoinErrors({}); }}
-                          className="btn-ghost flex-1 py-2.5 text-sm font-semibold rounded-xl">
+                          className="btn-ghost flex-1 py-3 text-sm font-bold rounded-xl">
                           ← Back
                         </button>
                         <button
                           type="submit"
                           disabled={joinLoading}
-                          className="btn-primary glow-btn flex-1 py-2.5 text-sm font-semibold rounded-xl"
-                          style={{ background: 'linear-gradient(135deg, #EC4899, #7C3AED)' }}
+                          className="btn-primary glow-btn flex-1 py-3 text-sm font-bold rounded-xl"
                         >
                           {joinLoading ? (
                             <span className="flex items-center justify-center gap-2">
                               <span className="h-4 w-4 rounded-full border-2 border-white/30 border-t-white animate-spin" />
                               Joining...
                             </span>
-                          ) : 'Join Room'}
+                          ) : 'Enter Room'}
                         </button>
                       </div>
                     </motion.form>

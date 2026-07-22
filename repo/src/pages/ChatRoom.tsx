@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Send, Shield, Mic, MicOff, PhoneCall, PhoneOff, Settings, Search,
+  Send, Shield, MessageSquare, Mic, MicOff, PhoneCall, PhoneOff, Settings, Search,
   Paperclip, Smile, FileText, Download, Trash2, Edit2, Pin,
   CornerDownRight, X, ZoomIn, Play, Pause, UserMinus, LogOut,
   Check, CheckCheck, Menu, Moon, Sun, Copy, Hash
@@ -20,12 +20,12 @@ import data from '@emoji-mart/data';
 // ============================================================
 function getAvatarColor(username: string): string {
   const colors = [
-    '#7C3AED', '#8B5CF6', '#6D28D9',
+    '#06B6D4', '#0891B2', '#0284C7',
+    '#3B82F6', '#2563EB', '#1D4ED8',
+    '#6366F1', '#4F46E5', '#4338CA',
+    '#10B981', '#059669', '#047857',
+    '#F59E0B', '#D97706', '#B45309',
     '#EC4899', '#DB2777', '#BE185D',
-    '#2563EB', '#1D4ED8', '#1E40AF',
-    '#059669', '#047857', '#065F46',
-    '#D97706', '#B45309', '#92400E',
-    '#DC2626', '#B91C1C', '#991B1B',
   ];
   let hash = 0;
   for (let i = 0; i < username.length; i++) {
@@ -972,8 +972,8 @@ export const ChatRoom: React.FC = () => {
           {/* Sidebar Footer */}
           <div className="px-4 py-3 flex items-center justify-between" style={{ borderTop: '1px solid var(--border-color)' }}>
             <div className="flex items-center gap-2">
-              <Shield className="h-3.5 w-3.5" style={{ color: 'var(--text-muted)' }} />
-              <span className="text-[10px] font-medium" style={{ color: 'var(--text-muted)' }}>Secured Sandbox</span>
+              <MessageSquare className="h-3.5 w-3.5" style={{ color: 'var(--text-brand)' }} />
+              <span className="text-[10px] font-semibold" style={{ color: 'var(--text-secondary)' }}>GapChat Secure</span>
             </div>
             <button
               onClick={handleDisconnect}
@@ -1008,7 +1008,7 @@ export const ChatRoom: React.FC = () => {
 
               <div className="h-8 w-8 rounded-lg flex items-center justify-center shrink-0"
                 style={{ background: 'var(--brand-gradient)', boxShadow: 'var(--shadow-brand)' }}>
-                <Shield className="h-4 w-4 text-white" />
+                <MessageSquare className="h-4 w-4 text-white" />
               </div>
               <div>
                 <h3 className="font-bold text-sm flex items-center gap-1.5 truncate max-w-[120px] sm:max-w-none"

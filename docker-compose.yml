@@ -3,7 +3,7 @@ version: '3.8'
 services:
   chat-app:
     build:
-      context: .
+      context: ./repo
       dockerfile: Dockerfile
     container_name: gapchat-app
     ports:

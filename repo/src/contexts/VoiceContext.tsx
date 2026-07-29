@@ -12,12 +12,10 @@ interface VoiceParticipant {
 interface VoiceContextType {
   isInVoice: boolean;
   isLocalMuted: boolean;
-  isPushToTalk: boolean;
   voiceParticipants: VoiceParticipant[];
   joinVoice: () => Promise<void>;
   leaveVoice: () => void;
   toggleLocalMute: () => void;
-  setPushToTalk: React.Dispatch<React.SetStateAction<boolean>>;
   activeSpeakers: string[]; // usernames of active speakers
 }
 
@@ -36,7 +34,6 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const { socket, isConnected } = useSocket();
   const [isInVoice, setIsInVoice] = useState(false);
   const [isLocalMuted, setIsLocalMuted] = useState(false);
-  const [isPushToTalk, setPushToTalk] = useState(false);
   const [voiceParticipants, setVoiceParticipants] = useState<VoiceParticipant[]>([]);
   const [activeSpeakers, setActiveSpeakers] = useState<string[]>([]);
 
@@ -303,72 +300,7 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
 
 
-  // ----------------------------------------------------
-  // Push to Talk keyboard listener handler
-  // ----------------------------------------------------
-  useEffect(() => {
-    if (!isPushToTalk) {
-      // If PTT turned off, match standard mute preference
-      if (localStreamRef.current) {
-        localStreamRef.current.getAudioTracks().forEach((track) => {
-          track.enabled = !isLocalMuted;
-        });
-      }
-      return;
-    }
 
-    // If PTT is active, microphone tracks start muted
-    if (localStreamRef.current) {
-      localStreamRef.current.getAudioTracks().forEach((track) => {
-        track.enabled = false;
-      });
-    }
-
-    let isKeyPressed = false;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Use SPACE key as Push-to-Talk shortcut
-      if (e.code === 'Space' && !isKeyPressed && isInVoice) {
-        // Prevent page scroll when space bar is pressed in chat inputs
-        const target = e.target as HTMLElement;
-        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
-
-        e.preventDefault();
-        isKeyPressed = true;
-
-        if (localStreamRef.current) {
-          localStreamRef.current.getAudioTracks().forEach((track) => {
-            track.enabled = true;
-          });
-        }
-        if (socket) {
-          socket.emit('voice_mute_toggle', { isMuted: false });
-        }
-      }
-    };
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      if (e.code === 'Space' && isKeyPressed) {
-        isKeyPressed = false;
-        if (localStreamRef.current) {
-          localStreamRef.current.getAudioTracks().forEach((track) => {
-            track.enabled = false;
-          });
-        }
-        if (socket) {
-          socket.emit('voice_mute_toggle', { isMuted: true });
-        }
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('keyup', handleKeyUp);
-    };
-  }, [isPushToTalk, isInVoice, isLocalMuted, socket]);
 
   // ----------------------------------------------------
   // Listeners for Socket WebRTC events
@@ -489,12 +421,10 @@ export const VoiceProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       value={{
         isInVoice,
         isLocalMuted,
-        isPushToTalk,
         voiceParticipants,
         joinVoice,
         leaveVoice,
         toggleLocalMute,
-        setPushToTalk,
         activeSpeakers,
       }}
     >

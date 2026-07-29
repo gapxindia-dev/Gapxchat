@@ -39,6 +39,7 @@ const storage = multer.diskStorage({
 const allowedMimeTypes = [
   'image/png', 'image/jpeg', 'image/jpg', 'image/webp', 'image/gif',
   'video/mp4', 'video/quicktime',
+  'audio/webm', 'audio/wav', 'audio/mp3', 'audio/ogg', 'audio/m4a', 'audio/aac', 'audio/x-m4a',
   'application/pdf', 'text/plain',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // docx
   'application/zip', 'application/x-zip-compressed'
@@ -50,10 +51,10 @@ const upload = multer({
     fileSize: 100 * 1024 * 1024, // 100 MB max size
   },
   fileFilter: (req, file, cb) => {
-    if (allowedMimeTypes.includes(file.mimetype) || file.originalname.match(/\.(png|jpg|jpeg|webp|gif|mp4|mov|pdf|txt|docx|zip)$/i)) {
+    if (allowedMimeTypes.includes(file.mimetype) || file.originalname.match(/\.(png|jpg|jpeg|webp|gif|mp4|mov|webm|wav|mp3|ogg|m4a|aac|pdf|txt|docx|zip)$/i)) {
       cb(null, true);
     } else {
-      cb(new Error('Invalid file type. Only standard images, videos, PDF, docx, txt, and ZIP files are allowed.'));
+      cb(new Error('Invalid file type. Only standard images, videos, audio/voice notes, PDF, docx, txt, and ZIP files are allowed.'));
     }
   },
 });

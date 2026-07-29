@@ -213,6 +213,11 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       disconnectFromRoomInternal(newSocket);
     });
 
+    newSocket.on('room_closed', ({ reason }) => {
+      window.dispatchEvent(new CustomEvent('chat:kicked', { detail: { reason: reason || 'Room closed by host.' } }));
+      disconnectFromRoomInternal(newSocket);
+    });
+
     newSocket.on('error_message', ({ error: errMsg }) => {
       window.dispatchEvent(new CustomEvent('chat:error', { detail: { message: errMsg } }));
     });

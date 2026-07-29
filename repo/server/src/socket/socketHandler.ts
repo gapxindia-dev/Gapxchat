@@ -399,28 +399,40 @@ export function setupSocketHandlers(io: Server) {
       // 3. Remove tracker
       delete activeSockets[socketId];
 
-      // 4. Update Database user status
-      // We set status to offline and capture lastSeen timestamp
+      // 4. Update Database user status & Check if owner left
       try {
-        const remainingSockets = Object.values(activeSockets).some(s => s.username.toLowerCase() === username.toLowerCase());
-        if (!remainingSockets) {
-          // If no other active tabs for this user, mark offline in DB
-          const offlineTime = new Date().toISOString();
-          await db.users.save(username, {
-            activeStatus: 'offline',
-            lastSeen: offlineTime,
-          });
+        const remainingOwnerSockets = Object.values(activeSockets).some(
+          s => s.username.toLowerCase() === username.toLowerCase() && s.roomCode === roomCode
+        );
 
-          // Broadcast offline status to room
-          io.to(roomCode).emit('user_status_changed', {
-            username,
-            status: 'offline',
-            lastSeen: offlineTime,
+        const room = await db.rooms.get(roomCode);
+
+        // If the owner disconnected and has no other open tabs, close the room instantly for everyone!
+        if (room && room.owner.toLowerCase() === username.toLowerCase() && !remainingOwnerSockets) {
+          console.log(`🚪 Host ${username} left room ${roomCode}. Closing room instantly.`);
+          io.to(roomCode).emit('room_closed', {
+            reason: 'The room host has left. The room is now closed.',
           });
+          await db.rooms.delete(roomCode);
+        } else {
+          if (!remainingOwnerSockets) {
+            const offlineTime = new Date().toISOString();
+            await db.users.save(username, {
+              activeStatus: 'offline',
+              lastSeen: offlineTime,
+            });
+
+            // Broadcast offline status to room
+            io.to(roomCode).emit('user_status_changed', {
+              username,
+              status: 'offline',
+              lastSeen: offlineTime,
+            });
+          }
+
+          // Update remaining members list
+          sendRoomMembersList(io, roomCode);
         }
-
-        // Update remaining members list
-        sendRoomMembersList(io, roomCode);
       } catch (err) {
         console.error('Error on socket disconnect status update:', err);
       }
